@@ -96,6 +96,7 @@ body {
   font-family: "Montserrat", Arial, sans-serif;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 a {
@@ -596,7 +597,8 @@ textarea {
   margin-left: -50vw;
   margin-right: -50vw;
   width: 100vw;
-  box-sizing: content-box;
+  box-sizing: border-box;
+  max-width: 100vw;
   padding: 0 max(20px, calc((100% - 1180px) / 2));
 }
 
@@ -856,6 +858,16 @@ textarea {
   .education-grid,
   .timeline {
     grid-template-columns: 1fr;
+  }
+
+  /* reduce card padding/gaps on small screens */
+  .project-grid {
+    gap: 16px;
+  }
+
+  .project-card {
+    padding: 18px;
+    min-height: auto;
   }
 
   .project-visual,
