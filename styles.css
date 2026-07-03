@@ -157,6 +157,21 @@ textarea {
   font-weight: 600;
 }
 
+.site-nav a.header-cta {
+  background: rgba(56, 177, 106, 0.18);
+  color: white;
+}
+
+.site-nav a.header-cta:hover,
+.site-nav a.header-cta:focus {
+  background: rgba(56, 177, 106, 0.3);
+}
+
+.site-nav .header-cta {
+  display: inline-flex;
+  margin-left: 8px;
+}
+
 .site-nav a:hover,
 .site-nav a.active {
   border-color: var(--line);
@@ -389,14 +404,19 @@ textarea {
 }
 
 .skill-grid,
-.feature-grid {
+.feature-grid,
+.project-grid,
+.service-grid,
+.contact-grid,
+.education-grid,
+.stats-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
 }
 
 .feature-grid {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 }
 
 .skill-card,
@@ -504,6 +524,32 @@ textarea {
   padding: 28px;
 }
 
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.service-card {
+  display: grid;
+  gap: 18px;
+  padding: 28px;
+}
+
+.service-card span.material-symbols-outlined {
+  font-size: 2.1rem;
+  color: var(--primary);
+}
+
+.service-card h3 {
+  margin: 0;
+}
+
+.service-card p {
+  margin: 0;
+  color: var(--muted);
+}
+
 .document-icon {
   display: grid;
   place-items: center;
@@ -522,6 +568,7 @@ textarea {
 .education-grid,
 .contact-grid {
   display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(320px, 0.8fr);
   gap: 18px;
 }
 
@@ -566,7 +613,7 @@ textarea {
 
 .project-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 18px;
 }
 
@@ -746,6 +793,7 @@ textarea {
   .split,
   .contact-grid,
   .project-grid,
+  .service-grid,
   .project-card,
   .project-card.hero-project {
     grid-template-columns: 1fr;
@@ -792,10 +840,24 @@ textarea {
     padding: 44px 0;
   }
 
+  .hero-copy,
+  .page-hero {
+    padding: 0;
+  }
+
+  .hero h1,
+  .page-hero h1 {
+    font-size: 1.95rem;
+  }
+
   .skill-grid,
   .feature-grid,
   .stats-grid,
-  .project-grid {
+  .project-grid,
+  .service-grid,
+  .contact-grid,
+  .education-grid,
+  .timeline {
     grid-template-columns: 1fr;
   }
 
@@ -808,5 +870,18 @@ textarea {
 
   .site-footer {
     flex-direction: column;
+  }
+
+  .section {
+    padding: 42px 0;
+  }
+
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .actions .btn {
+    width: 100%;
   }
 }
