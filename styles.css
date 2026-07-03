@@ -612,15 +612,21 @@ textarea {
 .project-card.full-width,
 .education-card.full-width {
   grid-column: 1 / -1;
-  width: 100%;
-  padding-left: 48px;
-  padding-right: 48px;
   box-sizing: border-box;
 }
 
 .project-card.full-width {
+  /* make the card expand to the full viewport width while respecting page padding */
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  width: 100vw;
   grid-template-columns: 86px 1fr;
   min-height: 220px;
+  padding-left: max(20px, calc((100% - 1180px) / 2));
+  padding-right: max(20px, calc((100% - 1180px) / 2));
 }
 
 .education-card.full-width {
