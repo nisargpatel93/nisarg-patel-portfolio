@@ -5,9 +5,11 @@
   "description": "Four-page portfolio with a Node.js contact form backend.",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
-  }
-  ,"dependencies": {
+    "start": "node server.js",
+    "check": "node --check server.js"
+  },
+  "dependencies": {
+    "mssql": "^11.0.1",
     "sqlite3": "^5.1.6"
   }
 }
