@@ -6,7 +6,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "check": "node --check server.js"
+    "check": "node --check server.js && node --check assets/js/script.js"
   },
   "dependencies": {
     "mssql": "^11.0.1",

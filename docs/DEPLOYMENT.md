@@ -4,7 +4,7 @@
 
 GitHub Pages can serve the portfolio pages, CSS, and JavaScript, but it cannot run `server.js`.
 
-When `window.PORTFOLIO_API_BASE_URL` is empty in `config.js`, the contact form uses the static FormSubmit email fallback:
+When `window.PORTFOLIO_API_BASE_URL` is empty in `assets/js/config.js`, the contact form uses the static FormSubmit email fallback:
 
 ```js
 window.PORTFOLIO_STATIC_FORM_ENDPOINT = "https://formsubmit.co/ajax/pn747076@gmail.com";
@@ -25,7 +25,7 @@ TWILIO_FROM=your_twilio_phone_number
 SMS_TO=+919313708082
 ```
 
-After the backend has a public URL, update `config.js`:
+After the backend has a public URL, update `assets/js/config.js`:
 
 ```js
 window.PORTFOLIO_API_BASE_URL = "https://your-backend-url";
