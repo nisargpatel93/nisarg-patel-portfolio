@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact | Nisarg Patel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html">Nisarg Patel</a>
+    <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false">
+      <span class="material-symbols-outlined">menu</span>
+    </button>
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a href="index.html">Home</a>
+      <a href="experience.html">Experience</a>
+      <a href="projects.html">Projects</a>
+      <a href="education.html">Education</a>
+      <a class="active" href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="page-shell subpage contact-layout">
+    <section class="page-hero">
+      <p class="eyebrow">Contact</p>
+      <h1>Tell me what you want to build.</h1>
+      <p class="lead narrow">Send a short message and the backend will save your contact request locally in the project.</p>
+    </section>
+
+    <section class="contact-grid">
+      <form class="card contact-form" id="contactForm">
+        <div class="form-row">
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" autocomplete="name" required minlength="2" placeholder="Your name">
+        </div>
+        <div class="form-row">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" autocomplete="email" required placeholder="you@example.com">
+        </div>
+        <div class="form-row">
+          <label for="subject">Subject</label>
+          <input id="subject" name="subject" type="text" required minlength="3" placeholder="Project, role, or collaboration">
+        </div>
+        <div class="form-row">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="6" required minlength="10" placeholder="Share the useful details here"></textarea>
+        </div>
+        <button class="btn primary" type="submit">
+          Send Message
+          <span class="material-symbols-outlined">send</span>
+        </button>
+        <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+      </form>
+
+      <aside class="card contact-card">
+        <span class="material-symbols-outlined">alternate_email</span>
+        <h2>Direct contact</h2>
+        <p>Prefer email? You can reach out directly too.</p>
+        <a href="mailto:pn747076@gmail.com">pn747076@gmail.com</a>
+        <a href="tel:+919313708082">+91 93137 08082</a>
+      </aside>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>Nisarg Patel</span>
+    <span>&copy; 2026. All rights reserved.</span>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
