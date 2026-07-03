@@ -157,22 +157,13 @@ textarea {
   font-weight: 600;
 }
 
-.site-nav a.header-cta {
-  background: rgba(56, 177, 106, 0.18);
-  color: white;
-}
-
-.site-nav a.header-cta:hover,
-.site-nav a.header-cta:focus {
-  background: rgba(56, 177, 106, 0.3);
-}
-
-.site-nav .header-cta {
-  display: inline-flex;
-  margin-left: 8px;
-}
-
 .site-nav a:hover,
+.site-nav a.active {
+  border-color: var(--line);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+}
+
 .site-nav a.active {
   border-color: var(--line);
   background: rgba(255, 255, 255, 0.06);
@@ -211,7 +202,6 @@ textarea {
   margin-bottom: 28px;
   border-radius: 999px;
   background: linear-gradient(90deg, var(--primary), var(--accent), rgba(181, 238, 206, 0.9));
-  animation: fadeInUp 0.8s ease-out 0.1s both;
 }
 
 .hero h1,
@@ -221,7 +211,6 @@ textarea {
   font-size: 24px;
   line-height: 1.04;
   letter-spacing: 0;
-  animation: fadeInUp 0.8s ease-out 0.15s both;
 }
 
 .lead {
@@ -229,7 +218,6 @@ textarea {
   margin: 22px 0 0;
   color: var(--muted);
   font-size: 1.08rem;
-  animation: fadeInUp 0.8s ease-out 0.25s both;
 }
 
 .lead.narrow {
@@ -243,7 +231,6 @@ textarea {
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  animation: fadeInUp 0.8s ease-out 0s both;
 }
 
 .actions {
@@ -251,7 +238,6 @@ textarea {
   flex-wrap: wrap;
   gap: 12px;
   margin-top: 34px;
-  animation: fadeInUp 0.8s ease-out 0.3s both;
 }
 
 .hero-strip {
@@ -259,7 +245,6 @@ textarea {
   flex-wrap: wrap;
   gap: 10px;
   margin-top: 32px;
-  animation: fadeInUp 0.8s ease-out 0.35s both;
 }
 
 .hero-strip span {
@@ -270,7 +255,6 @@ textarea {
   color: var(--muted);
   font-size: 0.82rem;
   font-weight: 800;
-  animation: fadeInUp 0.6s ease-out both;
 }
 
 .hero-strip span:nth-child(1) {
@@ -304,11 +288,10 @@ textarea {
   border-radius: var(--radius);
   cursor: pointer;
   font-weight: 800;
-  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+  transition: border-color 180ms ease, background 180ms ease;
 }
 
 .btn:hover {
-  transform: translateY(-2px);
 }
 
 .btn.primary {
@@ -394,13 +377,12 @@ textarea {
   border-radius: var(--radius);
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.025));
   box-shadow: 0 14px 44px rgba(0, 0, 0, 0.18);
-  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+  transition: border-color 180ms ease, background 180ms ease;
 }
 
 .card:hover {
   border-color: rgba(106, 203, 146, 0.34);
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.032));
-  transform: translateY(-3px);
 }
 
 .skill-grid,
@@ -569,7 +551,7 @@ textarea {
 .contact-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.4fr) minmax(320px, 0.8fr);
-  gap: 18px;
+  gap: 24px;
 }
 
 .education-card {
@@ -577,7 +559,10 @@ textarea {
   grid-template-columns: auto minmax(0, 1fr) auto;
   gap: 24px;
   align-items: center;
-  padding: 28px;
+  padding: 32px;
+  min-height: 240px;
+  background: rgba(14, 31, 22, 0.95);
+  border: 1px solid rgba(106, 203, 146, 0.16);
 }
 
 .education-icon {
@@ -611,26 +596,39 @@ textarea {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.065), rgba(255, 255, 255, 0.025));
 }
 
+/* utility: make a section span the full viewport width (edge-to-edge) */
+.full-bleed {
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  width: 100vw;
+  box-sizing: content-box;
+  padding: 0 max(20px, calc((100% - 1180px) / 2));
+}
+
 .project-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 26px;
 }
 
 .project-card {
   display: grid;
-  grid-template-columns: 86px minmax(0, 1fr);
+  grid-template-columns: minmax(0, auto) minmax(0, 1fr);
   gap: 22px;
   align-items: start;
-  padding: 28px;
+  padding: 32px;
+  min-height: 280px;
 }
 
 .project-card.hero-project {
   grid-column: 1 / -1;
   grid-template-columns: 130px minmax(0, 1fr);
   background:
-    linear-gradient(135deg, rgba(106, 203, 146, 0.18), rgba(106, 203, 146, 0.07)),
-    var(--surface-2);
+    linear-gradient(135deg, rgba(106, 203, 146, 0.22), rgba(12, 30, 18, 0.96));
+  border-color: rgba(106, 203, 146, 0.22);
 }
 
 .project-visual {
