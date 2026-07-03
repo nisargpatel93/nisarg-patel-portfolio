@@ -3,11 +3,41 @@ const fs = require("fs/promises");
 const path = require("path");
 const https = require("https");
 const { URLSearchParams } = require("url");
+const sqlite3 = require("sqlite3").verbose();
 
 const PORT = Number(process.env.PORT || 3000);
 const PUBLIC_DIR = __dirname;
 const DATA_DIR = path.join(__dirname, "data");
-const SUBMISSIONS_FILE = path.join(DATA_DIR, "contact-submissions.json");
+const DB_PATH = path.join(DATA_DIR, "contact.db");
+
+let db = null;
+
+// initialize SQLite DB (create folder + table)
+(async () => {
+  try {
+    await fs.mkdir(DATA_DIR, { recursive: true });
+  } catch (err) {
+    console.error("Unable to create data directory:", err);
+  }
+
+  db = new sqlite3.Database(DB_PATH, (err) => {
+    if (err) {
+      console.error("Failed to open SQLite DB:", err);
+      db = null;
+      return;
+    }
+    db.run(
+      `CREATE TABLE IF NOT EXISTS submissions (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT,
+        email TEXT,
+        subject TEXT,
+        message TEXT,
+        createdAt TEXT
+      )`
+    );
+  });
+})();
 
 const contentTypes = {
   ".html": "text/html; charset=utf-8",
@@ -82,27 +112,37 @@ async function readJsonBody(request) {
 }
 
 async function saveSubmission(contact) {
+  // Prefer SQLite storage if DB is available; otherwise fall back to JSON file
+  const createdAt = new Date().toISOString();
+
+  if (db) {
+    return new Promise((resolve, reject) => {
+      const stmt = db.prepare(
+        `INSERT INTO submissions (name, email, subject, message, createdAt) VALUES (?,?,?,?,?)`
+      );
+      stmt.run(contact.name, contact.email, contact.subject, contact.message, createdAt, function (err) {
+        if (err) return reject(err);
+        const id = `msg_${this.lastID}`;
+        resolve({ id, createdAt, ...contact });
+      });
+      stmt.finalize();
+    });
+  }
+
+  // fallback: write to JSON file (kept for compatibility)
   await fs.mkdir(DATA_DIR, { recursive: true });
+  const SUBMISSIONS_FILE = path.join(DATA_DIR, "contact-submissions.json");
 
   let submissions = [];
   try {
     const current = await fs.readFile(SUBMISSIONS_FILE, "utf8");
     submissions = JSON.parse(current);
-    if (!Array.isArray(submissions)) {
-      submissions = [];
-    }
+    if (!Array.isArray(submissions)) submissions = [];
   } catch (error) {
-    if (error.code !== "ENOENT") {
-      throw error;
-    }
+    if (error.code !== "ENOENT") throw error;
   }
 
-  const submission = {
-    id: `msg_${Date.now()}`,
-    createdAt: new Date().toISOString(),
-    ...contact
-  };
-
+  const submission = { id: `msg_${Date.now()}`, createdAt, ...contact };
   submissions.push(submission);
   await fs.writeFile(SUBMISSIONS_FILE, JSON.stringify(submissions, null, 2));
   return submission;
