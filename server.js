@@ -1,6 +1,8 @@
 const http = require("http");
 const fs = require("fs/promises");
 const path = require("path");
+const https = require("https");
+const { URLSearchParams } = require("url");
 
 const PORT = Number(process.env.PORT || 3000);
 const PUBLIC_DIR = __dirname;
@@ -106,6 +108,69 @@ async function saveSubmission(contact) {
   return submission;
 }
 
+function buildSmsBody(contact, id) {
+  const name = contact.name || "(no name)";
+  const email = contact.email || "(no email)";
+  const subject = contact.subject || "(no subject)";
+  const message = (contact.message || "").slice(0, 300);
+
+  return `New contact (${id}) from ${name} (${email}) — ${subject}: ${message}`;
+}
+
+function sendSms(contact, id) {
+  return new Promise((resolve, reject) => {
+    const accountSid = process.env.TWILIO_ACCOUNT_SID;
+    const authToken = process.env.TWILIO_AUTH_TOKEN;
+    const from = process.env.TWILIO_FROM;
+    const to = process.env.SMS_TO;
+
+    if (!accountSid || !authToken || !from || !to) {
+      return reject(new Error("Twilio SMS not configured."));
+    }
+
+    const body = buildSmsBody(contact, id);
+
+    const postData = new URLSearchParams({
+      From: from,
+      To: to,
+      Body: body
+    }).toString();
+
+    const options = {
+      method: "POST",
+      hostname: "api.twilio.com",
+      path: `/2010-04-01/Accounts/${encodeURIComponent(accountSid)}/Messages.json`,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Content-Length": Buffer.byteLength(postData),
+        Authorization: `Basic ${Buffer.from(`${accountSid}:${authToken}`).toString("base64")}`
+      }
+    };
+
+    const req = https.request(options, (res) => {
+      let data = "";
+      res.setEncoding("utf8");
+      res.on("data", (chunk) => (data += chunk));
+      res.on("end", () => {
+        try {
+          const parsed = JSON.parse(data);
+          if (res.statusCode >= 200 && res.statusCode < 300) {
+            resolve({ sid: parsed.sid, status: parsed.status });
+          } else {
+            reject(new Error(parsed.message || `Twilio error: ${res.statusCode}`));
+          }
+        } catch (err) {
+          reject(new Error("Invalid response from Twilio"));
+        }
+      });
+    });
+
+    req.on("error", (err) => reject(err));
+    req.write(postData);
+    req.end();
+  });
+}
+
 async function handleContact(request, response) {
   if (request.method !== "POST") {
     response.writeHead(405, { Allow: "POST" });
@@ -123,10 +188,23 @@ async function handleContact(request, response) {
     }
 
     const submission = await saveSubmission(contact);
+    // attempt optional SMS notification if Twilio env vars are provided
+    let smsInfo = null;
+    try {
+      if (process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN && process.env.TWILIO_FROM && process.env.SMS_TO) {
+        const smsResult = await sendSms(contact, submission.id);
+        smsInfo = { sms: smsResult };
+      }
+    } catch (err) {
+      // don't fail the request if SMS sending fails; include info in response
+      smsInfo = { smsError: String(err && err.message ? err.message : err) };
+    }
+
     sendJson(response, 201, {
       ok: true,
       id: submission.id,
-      message: "Contact request saved."
+      message: "Contact request saved.",
+      ...smsInfo
     });
   } catch (error) {
     const message = error instanceof SyntaxError ? "Invalid JSON request." : "Unable to save your message right now.";
