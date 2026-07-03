@@ -22,6 +22,47 @@ if (portrait) {
   });
 }
 
+const animatedElements = document.querySelectorAll(
+  ".section, .page-hero, .card, .metric, .tag-list span, .timeline-item, .document-card, .project-visual"
+);
+
+if (animatedElements.length) {
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  animatedElements.forEach((element, index) => {
+    element.classList.add("reveal");
+
+    if (element.classList.contains("portrait-panel") || element.classList.contains("contact-card")) {
+      element.classList.add("reveal-right");
+    }
+
+    element.style.setProperty("--reveal-delay", `${Math.min(index % 6, 5) * 55}ms`);
+  });
+
+  if (reduceMotion || !("IntersectionObserver" in window)) {
+    animatedElements.forEach((element) => element.classList.add("is-visible"));
+  } else {
+    const revealObserver = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            return;
+          }
+
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        });
+      },
+      {
+        rootMargin: "0px 0px -12% 0px",
+        threshold: 0.12
+      }
+    );
+
+    animatedElements.forEach((element) => revealObserver.observe(element));
+  }
+}
+
 const contactForm = document.querySelector("#contactForm");
 const formStatus = document.querySelector("#formStatus");
 const apiBaseUrl = (window.PORTFOLIO_API_BASE_URL || "").replace(/\/$/, "");

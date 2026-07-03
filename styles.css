@@ -76,6 +76,28 @@
   }
 }
 
+@keyframes softPulse {
+
+  0%,
+  100% {
+    box-shadow: 0 18px 40px rgba(31, 125, 74, 0.24);
+  }
+
+  50% {
+    box-shadow: 0 22px 52px rgba(56, 177, 106, 0.34);
+  }
+}
+
+@keyframes sheen {
+  from {
+    transform: translateX(-120%) skewX(-18deg);
+  }
+
+  to {
+    transform: translateX(180%) skewX(-18deg);
+  }
+}
+
 * {
   box-sizing: border-box;
 }
@@ -99,6 +121,7 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  animation: fadeIn 520ms ease both;
 }
 
 a {
@@ -136,12 +159,19 @@ textarea {
   border-bottom: 1px solid rgba(129, 201, 165, 0.18);
   background: rgba(8, 18, 13, 0.94);
   backdrop-filter: blur(18px);
+  animation: fadeInDown 580ms ease both;
 }
 
 .brand {
   font-size: 1.05rem;
   font-weight: 800;
   letter-spacing: 0;
+  transition: color 180ms ease, transform 180ms ease;
+}
+
+.brand:hover {
+  color: var(--success);
+  transform: translateY(-1px);
 }
 
 .site-nav {
@@ -158,6 +188,7 @@ textarea {
   color: var(--muted);
   font-size: 0.92rem;
   font-weight: 600;
+  transition: border-color 180ms ease, background 180ms ease, color 180ms ease, transform 180ms ease;
 }
 
 .site-nav a:hover,
@@ -165,6 +196,10 @@ textarea {
   border-color: var(--line);
   background: rgba(255, 255, 255, 0.06);
   color: var(--text);
+}
+
+.site-nav a:hover {
+  transform: translateY(-2px);
 }
 
 .site-nav a.active {
@@ -181,6 +216,13 @@ textarea {
   border-radius: var(--radius);
   background: var(--surface-2);
   color: var(--text);
+  transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+}
+
+.nav-toggle:hover {
+  border-color: rgba(106, 203, 146, 0.42);
+  background: rgba(56, 177, 106, 0.16);
+  transform: translateY(-1px);
 }
 
 .page-shell {
@@ -195,6 +237,14 @@ textarea {
   align-items: center;
   min-height: calc(100vh - 76px);
   padding: 64px 0;
+}
+
+.hero-copy {
+  animation: fadeInUp 700ms ease 120ms both;
+}
+
+.portrait-panel {
+  animation: slideInRight 760ms ease 220ms both;
 }
 
 /* hero decorative badge removed */
@@ -228,11 +278,27 @@ textarea {
   text-transform: uppercase;
 }
 
+.hero .eyebrow,
+.page-hero .eyebrow {
+  animation: fadeInUp 520ms ease 60ms both;
+}
+
+.hero h1,
+.page-hero h1 {
+  animation: fadeInUp 620ms ease 130ms both;
+}
+
+.hero .lead,
+.page-hero .lead {
+  animation: fadeInUp 620ms ease 210ms both;
+}
+
 .actions {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
   margin-top: 34px;
+  animation: fadeInUp 620ms ease 290ms both;
 }
 
 .hero-strip {
@@ -250,6 +316,14 @@ textarea {
   color: var(--muted);
   font-size: 0.82rem;
   font-weight: 800;
+  animation: fadeInUp 520ms ease both;
+  transition: border-color 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.hero-strip span:hover {
+  border-color: rgba(106, 203, 146, 0.42);
+  color: var(--text);
+  transform: translateY(-2px);
 }
 
 .hero-strip span:nth-child(1) {
@@ -273,6 +347,8 @@ textarea {
 }
 
 .btn {
+  position: relative;
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -283,10 +359,30 @@ textarea {
   border-radius: var(--radius);
   cursor: pointer;
   font-weight: 800;
-  transition: border-color 180ms ease, background 180ms ease;
+  transition: border-color 180ms ease, background 180ms ease, box-shadow 180ms ease, transform 180ms ease;
 }
 
 .btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn.primary::after {
+  position: absolute;
+  inset: 0 auto 0 -40%;
+  width: 34%;
+  background: rgba(255, 255, 255, 0.28);
+  content: "";
+  opacity: 0;
+  pointer-events: none;
+}
+
+.btn.primary:hover::after {
+  animation: sheen 820ms ease;
+  opacity: 1;
 }
 
 .btn.primary {
@@ -294,6 +390,7 @@ textarea {
   background: linear-gradient(135deg, var(--primary-strong), var(--primary));
   color: white;
   box-shadow: 0 18px 40px rgba(31, 125, 74, 0.24);
+  animation: softPulse 4.8s ease-in-out infinite;
 }
 
 .btn.secondary {
@@ -328,13 +425,20 @@ textarea {
   border-radius: 18px;
   background: var(--surface-2);
   box-shadow: var(--shadow);
+  transition: border-color 220ms ease, box-shadow 220ms ease, transform 220ms ease;
 }
 
+.profile-frame:hover {
+  border-color: rgba(137, 230, 173, 0.52);
+  box-shadow: 0 26px 80px rgba(0, 0, 0, 0.46);
+  transform: translateY(-4px);
+}
 
 .profile-portrait {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  animation: floatingImage 7s ease-in-out infinite;
 }
 
 .section {
@@ -372,12 +476,14 @@ textarea {
   border-radius: var(--radius);
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.025));
   box-shadow: 0 14px 44px rgba(0, 0, 0, 0.18);
-  transition: border-color 180ms ease, background 180ms ease;
+  transition: border-color 180ms ease, background 180ms ease, box-shadow 180ms ease, transform 180ms ease;
 }
 
 .card:hover {
   border-color: rgba(106, 203, 146, 0.34);
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.032));
+  box-shadow: 0 20px 56px rgba(0, 0, 0, 0.25);
+  transform: translateY(-4px);
 }
 
 .skill-grid,
@@ -443,6 +549,13 @@ textarea {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--surface-2);
+  transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+}
+
+.metric:hover {
+  border-color: rgba(106, 203, 146, 0.34);
+  background: rgba(56, 177, 106, 0.1);
+  transform: translateY(-3px);
 }
 
 .metric strong {
@@ -584,6 +697,14 @@ textarea {
   color: var(--muted);
   font-size: 0.92rem;
   font-weight: 700;
+  transition: border-color 180ms ease, background 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.tag-list span:hover {
+  border-color: rgba(106, 203, 146, 0.38);
+  background: rgba(56, 177, 106, 0.14);
+  color: var(--text);
+  transform: translateY(-2px);
 }
 
 .tag-list.large span {
@@ -645,6 +766,16 @@ textarea {
     radial-gradient(circle at 30% 20%, rgba(181, 238, 206, 0.24), transparent 45%),
     rgba(106, 203, 146, 0.1);
   color: var(--primary);
+  transition: border-color 180ms ease, background 180ms ease, color 180ms ease, transform 220ms ease;
+}
+
+.project-card:hover .project-visual,
+.service-card:hover span.material-symbols-outlined,
+.skill-card:hover .material-symbols-outlined,
+.feature-grid .card:hover .material-symbols-outlined,
+.contact-card:hover .material-symbols-outlined {
+  color: var(--success);
+  transform: scale(1.08) rotate(-2deg);
 }
 
 .hero-project .project-visual {
@@ -699,11 +830,13 @@ textarea {
   color: var(--text);
   outline: none;
   padding: 13px 14px;
+  transition: border-color 180ms ease, background 180ms ease, box-shadow 180ms ease;
 }
 
 input:focus,
 textarea:focus {
   border-color: rgba(56, 177, 106, 0.72);
+  background: rgba(255, 255, 255, 0.065);
   box-shadow: 0 0 0 4px rgba(106, 203, 146, 0.18);
 }
 
@@ -746,6 +879,12 @@ textarea {
   margin-top: 12px;
   color: var(--primary);
   font-weight: 800;
+  transition: color 180ms ease, transform 180ms ease;
+}
+
+.contact-card a:hover {
+  color: var(--success);
+  transform: translateX(3px);
 }
 
 .site-footer {
@@ -758,6 +897,50 @@ textarea {
   border-top: 1px solid var(--line);
   color: var(--faint);
   font-size: 0.9rem;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 620ms ease, transform 620ms ease;
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-left {
+  transform: translateX(-24px);
+}
+
+.reveal-right {
+  transform: translateX(24px);
+}
+
+.reveal-left.is-visible,
+.reveal-right.is-visible {
+  transform: translateX(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+
+  .reveal,
+  .reveal-left,
+  .reveal-right {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 @media (max-width: 860px) {
