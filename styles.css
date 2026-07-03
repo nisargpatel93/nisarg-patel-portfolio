@@ -1,18 +1,18 @@
 :root {
-  --bg: #110909;
-  --surface: #1b1010;
-  --surface-2: #261414;
-  --surface-3: #321a1a;
-  --text: #f5e9e9;
-  --muted: #f0c0c0;
-  --faint: #b98d8d;
-  --line: rgba(255, 127, 127, 0.18);
-  --primary: #ff5858;
-  --primary-strong: #bb0f1b;
-  --accent: #ff8a8a;
+  --bg: #08120d;
+  --surface: #122016;
+  --surface-2: #183024;
+  --surface-3: #24362c;
+  --text: #edf6ec;
+  --muted: #b7d4b9;
+  --faint: #8cae96;
+  --line: rgba(129, 201, 165, 0.18);
+  --primary: #38b16a;
+  --primary-strong: #1f7d4a;
+  --accent: #6acb92;
   --gold: #f2c46d;
-  --rose: #ff9fb2;
-  --danger: #ff3d3d;
+  --rose: #d8f3dc;
+  --danger: #ff6b6b;
   --success: #89e6ad;
   --radius: 8px;
   --shadow: 0 22px 70px rgba(0, 0, 0, 0.36);
@@ -88,9 +88,9 @@ body {
   min-height: 100vh;
   margin: 0;
   background:
-    radial-gradient(circle at top left, rgba(255, 88, 88, 0.24), transparent 30rem),
-    radial-gradient(circle at 80% 20%, rgba(255, 138, 138, 0.12), transparent 22rem),
-    radial-gradient(circle at bottom right, rgba(255, 55, 55, 0.14), transparent 28rem),
+    radial-gradient(circle at top left, rgba(56, 177, 106, 0.22), transparent 30rem),
+    radial-gradient(circle at 80% 20%, rgba(106, 203, 146, 0.16), transparent 22rem),
+    radial-gradient(circle at bottom right, rgba(44, 180, 115, 0.16), transparent 28rem),
     var(--bg);
   color: var(--text);
   font-family: "Montserrat", Arial, sans-serif;
@@ -130,8 +130,8 @@ textarea {
   min-height: 76px;
   margin: 0;
   padding: 0 max(20px, calc((100% - 1180px) / 2));
-  border-bottom: 1px solid rgba(255, 88, 88, 0.18);
-  background: rgba(17, 9, 9, 0.94);
+  border-bottom: 1px solid rgba(129, 201, 165, 0.18);
+  background: rgba(8, 18, 13, 0.94);
   backdrop-filter: blur(18px);
 }
 
@@ -195,7 +195,7 @@ textarea {
   height: 5px;
   margin-bottom: 28px;
   border-radius: 999px;
-  background: linear-gradient(90deg, var(--primary), var(--accent), rgba(255, 200, 200, 0.9));
+  background: linear-gradient(90deg, var(--primary), var(--accent), rgba(181, 238, 206, 0.9));
   animation: fadeInUp 0.8s ease-out 0.1s both;
 }
 
@@ -251,7 +251,7 @@ textarea {
   padding: 8px 11px;
   border: 1px solid var(--line);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.055);
+  background: rgba(255, 255, 255, 0.05);
   color: var(--muted);
   font-size: 0.82rem;
   font-weight: 800;
@@ -297,15 +297,15 @@ textarea {
 }
 
 .btn.primary {
-  border-color: rgba(255, 88, 88, 0.42);
+  border-color: rgba(56, 177, 106, 0.42);
   background: linear-gradient(135deg, var(--primary-strong), var(--primary));
   color: white;
-  box-shadow: 0 18px 40px rgba(187, 15, 27, 0.24);
+  box-shadow: 0 18px 40px rgba(31, 125, 74, 0.24);
 }
 
 .btn.secondary {
-  border-color: rgba(255, 88, 88, 0.3);
-  background: rgba(255, 88, 88, 0.12);
+  border-color: rgba(106, 203, 146, 0.3);
+  background: rgba(56, 177, 106, 0.16);
   color: white;
 }
 
@@ -331,7 +331,7 @@ textarea {
   width: min(100%, 350px);
   aspect-ratio: 1;
   margin-left: auto;
-  border: 1px solid rgba(123, 183, 255, 0.32);
+  border: 1px solid rgba(106, 203, 146, 0.32);
   border-radius: 18px;
   background: var(--surface-2);
   box-shadow: var(--shadow);
@@ -375,7 +375,7 @@ textarea {
 }
 
 .card {
-  border: 1px solid var(--line);
+  border: 1px solid rgba(129, 201, 165, 0.32);
   border-radius: var(--radius);
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.025));
   box-shadow: 0 14px 44px rgba(0, 0, 0, 0.18);
@@ -383,7 +383,7 @@ textarea {
 }
 
 .card:hover {
-  border-color: rgba(123, 183, 255, 0.34);
+  border-color: rgba(106, 203, 146, 0.34);
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.032));
   transform: translateY(-3px);
 }
@@ -407,7 +407,7 @@ textarea {
 
 .skill-card.featured {
   background:
-    linear-gradient(135deg, rgba(123, 183, 255, 0.16), rgba(255, 255, 255, 0.035)),
+    linear-gradient(135deg, rgba(106, 203, 146, 0.16), rgba(255, 255, 255, 0.035)),
     var(--surface-2);
 }
 
@@ -509,9 +509,9 @@ textarea {
   place-items: center;
   width: 64px;
   height: 64px;
-  border: 1px solid rgba(123, 183, 255, 0.24);
+  border: 1px solid rgba(106, 203, 146, 0.24);
   border-radius: 16px;
-  background: rgba(123, 183, 255, 0.1);
+  background: rgba(106, 203, 146, 0.08);
   color: var(--primary);
 }
 
@@ -539,7 +539,7 @@ textarea {
   width: 56px;
   height: 56px;
   border-radius: var(--radius);
-  background: rgba(123, 183, 255, 0.1);
+  background: rgba(106, 203, 146, 0.1);
   color: var(--primary);
 }
 
@@ -582,7 +582,7 @@ textarea {
   grid-column: 1 / -1;
   grid-template-columns: 130px minmax(0, 1fr);
   background:
-    linear-gradient(135deg, rgba(123, 183, 255, 0.18), rgba(102, 217, 199, 0.06)),
+    linear-gradient(135deg, rgba(106, 203, 146, 0.18), rgba(106, 203, 146, 0.07)),
     var(--surface-2);
 }
 
@@ -591,11 +591,11 @@ textarea {
   place-items: center;
   width: 86px;
   height: 86px;
-  border: 1px solid rgba(123, 183, 255, 0.22);
+  border: 1px solid rgba(106, 203, 146, 0.22);
   border-radius: 18px;
   background:
-    radial-gradient(circle at 30% 20%, rgba(242, 196, 109, 0.24), transparent 45%),
-    rgba(123, 183, 255, 0.1);
+    radial-gradient(circle at 30% 20%, rgba(181, 238, 206, 0.24), transparent 45%),
+    rgba(106, 203, 146, 0.1);
   color: var(--primary);
 }
 
@@ -647,7 +647,7 @@ textarea {
   width: 100%;
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: rgba(0, 0, 0, 0.22);
+  background: rgba(255, 255, 255, 0.04);
   color: var(--text);
   outline: none;
   padding: 13px 14px;
@@ -655,8 +655,8 @@ textarea {
 
 input:focus,
 textarea:focus {
-  border-color: rgba(123, 183, 255, 0.72);
-  box-shadow: 0 0 0 4px rgba(123, 183, 255, 0.12);
+  border-color: rgba(56, 177, 106, 0.72);
+  box-shadow: 0 0 0 4px rgba(106, 203, 146, 0.18);
 }
 
 textarea {
@@ -675,9 +675,19 @@ textarea {
 }
 
 .form-status.error {
-  color: var(--danger);
+  color: #d6a7a7;
 }
 
+.form-hint {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.form-hint a {
+  color: var(--primary);
+  text-decoration: underline;
+}
 .contact-card {
   position: sticky;
   top: 96px;

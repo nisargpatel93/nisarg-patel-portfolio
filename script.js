@@ -42,10 +42,11 @@ if (contactForm && formStatus) {
         body: JSON.stringify(payload)
       });
 
-      const result = await response.json();
+      const result = await response.json().catch(() => null);
 
       if (!response.ok) {
-        throw new Error(result.error || "Message could not be sent.");
+        const errorMessage = result?.error || (response.status === 404 ? "Contact service unavailable." : "Message could not be sent.");
+        throw new Error(errorMessage);
       }
 
       contactForm.reset();
@@ -53,7 +54,11 @@ if (contactForm && formStatus) {
       formStatus.textContent = "Message received. Thank you for reaching out.";
     } catch (error) {
       formStatus.classList.add("error");
-      formStatus.textContent = error.message;
+      if (error.message.includes("Contact service unavailable") || error.message.includes("Failed to fetch")) {
+        formStatus.innerHTML = "The contact service is unavailable on this deployment. Please email <a href=\"mailto:pn747076@gmail.com\">pn747076@gmail.com</a> directly.";
+      } else {
+        formStatus.textContent = error.message;
+      }
     }
   });
 }
