@@ -194,15 +194,7 @@ textarea {
   padding: 64px 0;
 }
 
-.hero-copy::before {
-  content: "";
-  display: block;
-  width: 72px;
-  height: 5px;
-  margin-bottom: 28px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, var(--primary), var(--accent), rgba(181, 238, 206, 0.9));
-}
+/* hero decorative badge removed */
 
 .hero h1,
 .page-hero h1 {
@@ -608,35 +600,16 @@ textarea {
   padding: 0 max(20px, calc((100% - 1180px) / 2));
 }
 
-/* specific full-width card inside grids */
-.project-card.full-width,
 .education-card.full-width {
   grid-column: 1 / -1;
   box-sizing: border-box;
-}
-
-.project-card.full-width {
-  /* make the card expand to the full viewport width while respecting page padding */
-  position: relative;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
-  width: 100vw;
-  grid-template-columns: 86px 1fr;
-  min-height: 220px;
-  padding-left: max(20px, calc((100% - 1180px) / 2));
-  padding-right: max(20px, calc((100% - 1180px) / 2));
-}
-
-.education-card.full-width {
   grid-template-columns: 56px minmax(0, 1fr) minmax(140px, auto);
   align-items: center;
 }
 
 .project-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 26px;
 }
 
