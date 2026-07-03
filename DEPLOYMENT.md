@@ -18,7 +18,7 @@ To save messages in the backend and send SMS, deploy the Node app to a backend h
 
 ```text
 PORT=3000
-CORS_ALLOW_ORIGIN=https://nisargpatel93.github.io
+CORS_ALLOW_ORIGIN=https://nisargpatel93.com
 TWILIO_ACCOUNT_SID=your_twilio_account_sid
 TWILIO_AUTH_TOKEN=your_twilio_auth_token
 TWILIO_FROM=your_twilio_phone_number
