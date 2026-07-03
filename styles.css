@@ -608,6 +608,26 @@ textarea {
   padding: 0 max(20px, calc((100% - 1180px) / 2));
 }
 
+/* specific full-width card inside grids */
+.project-card.full-width,
+.education-card.full-width {
+  grid-column: 1 / -1;
+  width: 100%;
+  padding-left: 48px;
+  padding-right: 48px;
+  box-sizing: border-box;
+}
+
+.project-card.full-width {
+  grid-template-columns: 86px 1fr;
+  min-height: 220px;
+}
+
+.education-card.full-width {
+  grid-template-columns: 56px minmax(0, 1fr) minmax(140px, auto);
+  align-items: center;
+}
+
 .project-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
