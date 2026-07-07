@@ -997,9 +997,16 @@ textarea {
   }
 
   .timeline-item,
-  .education-card,
   .document-card {
     grid-template-columns: 1fr;
+  }
+
+  .education-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 24px;
   }
 
   .metric.compact {
@@ -1060,6 +1067,22 @@ textarea {
     width: 64px;
     height: 64px;
     border-radius: 14px;
+  }
+
+  .education-card {
+    gap: 12px;
+    padding: 18px;
+    min-height: auto;
+  }
+
+  .education-icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .metric.compact {
+    min-width: 100%;
+    margin-left: 0;
   }
 
   .site-footer {
