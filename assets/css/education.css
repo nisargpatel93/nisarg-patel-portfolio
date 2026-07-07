@@ -12,8 +12,8 @@
 
 .education-content {
   display: flex;
-  flex-direction: row;
-  gap: 24px;
+  flex-direction: column;
+  gap: 16px;
   align-items: flex-start;
   padding: 24px;
   background: rgba(46, 204, 113, 0.2);
@@ -26,7 +26,7 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  flex: 1;
+  width: 100%;
 }
 
 .education-icon {
@@ -37,14 +37,13 @@
   border-radius: var(--radius);
   background: rgba(106, 203, 146, 0.1);
   color: var(--primary);
-  flex-shrink: 0;
 }
 
 .metric.compact {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  flex-shrink: 0;
+  width: 100%;
 }
 
 @media (max-width: 860px) {
@@ -98,4 +97,5 @@
     width: 100%;
   }
 }
+
 
