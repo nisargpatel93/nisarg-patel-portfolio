@@ -262,7 +262,7 @@ textarea {
   max-width: 620px;
   margin: 22px 0 0;
   color: var(--muted);
-  font-size: 1.08rem;
+  font-size: 18px;
 }
 
 .lead.narrow {
@@ -461,7 +461,7 @@ textarea {
 .section-heading h2,
 .split h2 {
   margin: 0;
-  font-size: clamp(1.65rem, 3vw, 2.5rem);
+  font-size: 24px;
   line-height: 1.16;
 }
 
@@ -667,8 +667,8 @@ textarea {
   gap: 16px;
   align-items: flex-start;
   padding: 32px;
-  background: rgba(56, 177, 106, 0.15);
-  border: 1px solid rgba(106, 203, 146, 0.32);
+  background: rgba(46, 204, 113, 0.2);
+  border: 1px solid #2ecc71;
 }
 
 .education-icon {
