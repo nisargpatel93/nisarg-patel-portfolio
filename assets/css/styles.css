@@ -576,7 +576,6 @@ textarea {
 }
 
 .metric.compact {
-  margin-left: auto;
   min-width: 150px;
 }
 
@@ -663,12 +662,11 @@ textarea {
 }
 
 .education-card {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  gap: 24px;
-  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
   padding: 32px;
-  min-height: 240px;
   background: rgba(14, 31, 22, 0.95);
   border: 1px solid rgba(106, 203, 146, 0.16);
 }
@@ -728,8 +726,6 @@ textarea {
 .education-card.full-width {
   grid-column: 1 / -1;
   box-sizing: border-box;
-  grid-template-columns: 56px minmax(0, 1fr) minmax(140px, auto);
-  align-items: center;
 }
 
 .project-grid {
@@ -1007,10 +1003,6 @@ textarea {
     align-items: flex-start;
     gap: 16px;
     padding: 24px;
-  }
-
-  .metric.compact {
-    margin-left: 0;
   }
 
   .contact-card {
