@@ -667,8 +667,8 @@ textarea {
   gap: 16px;
   align-items: flex-start;
   padding: 32px;
-  background: rgba(14, 31, 22, 0.95);
-  border: 1px solid rgba(106, 203, 146, 0.16);
+  background: rgba(56, 177, 106, 0.15);
+  border: 1px solid rgba(106, 203, 146, 0.32);
 }
 
 .education-icon {
