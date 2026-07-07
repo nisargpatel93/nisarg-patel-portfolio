@@ -2,9 +2,42 @@ const navToggle = document.querySelector(".nav-toggle");
 const siteNav = document.querySelector(".site-nav");
 
 if (navToggle && siteNav) {
+  const closeNavigation = () => {
+    siteNav.classList.remove("open");
+    navToggle.setAttribute("aria-expanded", "false");
+  };
+
   navToggle.addEventListener("click", () => {
     const isOpen = siteNav.classList.toggle("open");
     navToggle.setAttribute("aria-expanded", String(isOpen));
+  });
+
+  siteNav.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", closeNavigation);
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!siteNav.classList.contains("open")) {
+      return;
+    }
+
+    if (siteNav.contains(event.target) || navToggle.contains(event.target)) {
+      return;
+    }
+
+    closeNavigation();
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeNavigation();
+    }
+  });
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 860) {
+      closeNavigation();
+    }
   });
 }
 
