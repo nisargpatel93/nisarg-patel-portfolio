@@ -1,14 +1,23 @@
 const navToggle = document.querySelector(".nav-toggle");
 const siteNav = document.querySelector(".site-nav");
 
+const updateScrollState = () => {
+  document.body.classList.toggle("has-scrolled", window.scrollY > 12);
+};
+
+updateScrollState();
+window.addEventListener("scroll", updateScrollState, { passive: true });
+
 if (navToggle && siteNav) {
   const closeNavigation = () => {
     siteNav.classList.remove("open");
+    navToggle.classList.remove("is-open");
     navToggle.setAttribute("aria-expanded", "false");
   };
 
   navToggle.addEventListener("click", () => {
     const isOpen = siteNav.classList.toggle("open");
+    navToggle.classList.toggle("is-open", isOpen);
     navToggle.setAttribute("aria-expanded", String(isOpen));
   });
 

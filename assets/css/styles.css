@@ -15,7 +15,9 @@
   --danger: #ff6b6b;
   --success: #89e6ad;
   --radius: 8px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --shadow: 0 22px 70px rgba(0, 0, 0, 0.36);
+  --shadow-soft: 0 16px 50px rgba(0, 0, 0, 0.22);
 }
 
 @keyframes fadeInUp {
@@ -98,6 +100,18 @@
   }
 }
 
+@keyframes menuDrop {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 * {
   box-sizing: border-box;
 }
@@ -109,11 +123,13 @@ html {
 }
 
 body {
+  position: relative;
   min-height: 100vh;
   margin: 0;
   background:
     radial-gradient(circle at top left, rgba(56, 177, 106, 0.22), transparent 30rem),
     radial-gradient(circle at 80% 20%, rgba(106, 203, 146, 0.16), transparent 22rem),
+    linear-gradient(140deg, rgba(242, 196, 109, 0.055), transparent 34rem),
     radial-gradient(circle at bottom right, rgba(44, 180, 115, 0.16), transparent 28rem),
     var(--bg);
   color: var(--text);
@@ -122,6 +138,25 @@ body {
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
   animation: fadeIn 520ms ease both;
+}
+
+body::before {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 72px 72px;
+  content: "";
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.72), transparent 78%);
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.72), transparent 78%);
+  pointer-events: none;
+}
+
+body > * {
+  position: relative;
+  z-index: 1;
 }
 
 a {
@@ -159,7 +194,15 @@ textarea {
   border-bottom: 1px solid rgba(129, 201, 165, 0.18);
   background: rgba(8, 18, 13, 0.94);
   backdrop-filter: blur(18px);
-  animation: fadeInDown 580ms ease both;
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  animation: fadeInDown 580ms var(--ease) both;
+  transition: background 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+}
+
+body.has-scrolled .site-header {
+  border-color: rgba(129, 201, 165, 0.28);
+  background: rgba(8, 18, 13, 0.86);
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.24);
 }
 
 .brand {
@@ -172,7 +215,7 @@ textarea {
   font-weight: 800;
   letter-spacing: 0;
   line-height: 1.2;
-  transition: color 180ms ease, transform 180ms ease;
+  transition: color 220ms ease, transform 220ms var(--ease);
 }
 
 .brand-name,
@@ -197,6 +240,7 @@ textarea {
 }
 
 .site-nav a {
+  position: relative;
   min-height: 40px;
   padding: 9px 12px;
   border: 1px solid transparent;
@@ -204,7 +248,21 @@ textarea {
   color: var(--muted);
   font-size: 0.92rem;
   font-weight: 600;
-  transition: border-color 180ms ease, background 180ms ease, color 180ms ease, transform 180ms ease;
+  transition: border-color 220ms ease, background 220ms ease, color 220ms ease, transform 220ms var(--ease);
+}
+
+.site-nav a::after {
+  position: absolute;
+  right: 12px;
+  bottom: 6px;
+  left: 12px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--primary), var(--gold));
+  content: "";
+  opacity: 0;
+  transform: scaleX(0.45);
+  transition: opacity 220ms ease, transform 220ms var(--ease);
 }
 
 .site-nav a:hover,
@@ -212,6 +270,12 @@ textarea {
   border-color: var(--line);
   background: rgba(255, 255, 255, 0.06);
   color: var(--text);
+}
+
+.site-nav a:hover::after,
+.site-nav a.active::after {
+  opacity: 1;
+  transform: scaleX(1);
 }
 
 .site-nav a:hover {
@@ -233,13 +297,26 @@ textarea {
   border-radius: var(--radius);
   background: var(--surface-2);
   color: var(--text);
-  transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+  transition: border-color 220ms ease, background 220ms ease, transform 220ms var(--ease);
 }
 
 .nav-toggle:hover {
   border-color: rgba(106, 203, 146, 0.42);
   background: rgba(56, 177, 106, 0.16);
   transform: translateY(-1px);
+}
+
+.nav-toggle.is-open {
+  border-color: rgba(137, 230, 173, 0.48);
+  background: rgba(56, 177, 106, 0.2);
+}
+
+.nav-toggle .material-symbols-outlined {
+  transition: transform 220ms var(--ease);
+}
+
+.nav-toggle.is-open .material-symbols-outlined {
+  transform: rotate(90deg);
 }
 
 .page-shell {
@@ -258,11 +335,11 @@ textarea {
 }
 
 .hero-copy {
-  animation: fadeInUp 700ms ease 120ms both;
+  animation: fadeInUp 700ms var(--ease) 120ms both;
 }
 
 .portrait-panel {
-  animation: slideInRight 760ms ease 220ms both;
+  animation: slideInRight 760ms var(--ease) 220ms both;
 }
 
 /* hero decorative badge removed */
@@ -377,7 +454,7 @@ textarea {
   border-radius: var(--radius);
   cursor: pointer;
   font-weight: 800;
-  transition: border-color 180ms ease, background 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+  transition: border-color 220ms ease, background 220ms ease, box-shadow 220ms ease, transform 220ms var(--ease);
 }
 
 .btn:hover {
@@ -405,7 +482,7 @@ textarea {
 
 .btn.primary {
   border-color: rgba(56, 177, 106, 0.42);
-  background: linear-gradient(135deg, var(--primary-strong), var(--primary));
+  background: linear-gradient(135deg, var(--primary-strong), var(--primary) 58%, #53c484);
   color: white;
   box-shadow: 0 18px 40px rgba(31, 125, 74, 0.24);
   animation: softPulse 4.8s ease-in-out infinite;
@@ -413,8 +490,17 @@ textarea {
 
 .btn.secondary {
   border-color: rgba(106, 203, 146, 0.3);
-  background: rgba(56, 177, 106, 0.16);
+  background: linear-gradient(135deg, rgba(56, 177, 106, 0.18), rgba(242, 196, 109, 0.08));
   color: white;
+}
+
+.btn:focus-visible,
+.site-nav a:focus-visible,
+.nav-toggle:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid rgba(137, 230, 173, 0.34);
+  outline-offset: 3px;
 }
 
 .btn.ghost {
@@ -443,13 +529,33 @@ textarea {
   border-radius: 18px;
   background: var(--surface-2);
   box-shadow: var(--shadow);
-  transition: border-color 220ms ease, box-shadow 220ms ease, transform 220ms ease;
+  transition: border-color 260ms ease, box-shadow 260ms ease, transform 260ms var(--ease);
+}
+
+.profile-frame::before {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border: 1px solid transparent;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(137, 230, 173, 0.8), transparent 42%, rgba(242, 196, 109, 0.45)) border-box;
+  content: "";
+  -webkit-mask:
+    linear-gradient(#000 0 0) padding-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) padding-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0.48;
+  pointer-events: none;
 }
 
 .profile-frame:hover {
   border-color: rgba(137, 230, 173, 0.52);
   box-shadow: 0 26px 80px rgba(0, 0, 0, 0.46);
-  transform: translateY(-4px);
+  transform: translateY(-5px) scale(1.01);
 }
 
 .profile-portrait {
@@ -490,18 +596,39 @@ textarea {
 }
 
 .card {
+  position: relative;
+  overflow: hidden;
   border: 1px solid rgba(129, 201, 165, 0.32);
   border-radius: var(--radius);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.025));
-  box-shadow: 0 14px 44px rgba(0, 0, 0, 0.18);
-  transition: border-color 180ms ease, background 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.065), rgba(255, 255, 255, 0.025)),
+    rgba(18, 32, 22, 0.72);
+  box-shadow: var(--shadow-soft);
+  transition: border-color 220ms ease, background 220ms ease, box-shadow 220ms ease, transform 220ms var(--ease);
+}
+
+.card::before {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(137, 230, 173, 0.72), rgba(242, 196, 109, 0.42), transparent);
+  content: "";
+  opacity: 0;
+  transition: opacity 220ms ease;
+  pointer-events: none;
 }
 
 .card:hover {
-  border-color: rgba(106, 203, 146, 0.34);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.032));
-  box-shadow: 0 20px 56px rgba(0, 0, 0, 0.25);
-  transform: translateY(-4px);
+  border-color: rgba(137, 230, 173, 0.42);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.085), rgba(255, 255, 255, 0.034)),
+    rgba(18, 32, 22, 0.78);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.3);
+  transform: translateY(-5px);
+}
+
+.card:hover::before {
+  opacity: 1;
 }
 
 .skill-grid,
@@ -563,16 +690,30 @@ textarea {
 }
 
 .metric {
+  position: relative;
+  overflow: hidden;
   padding: 24px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--surface-2);
-  transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+  transition: border-color 220ms ease, background 220ms ease, transform 220ms var(--ease), box-shadow 220ms ease;
+}
+
+.metric::after {
+  position: absolute;
+  inset: auto 18px 14px auto;
+  width: 42px;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--gold);
+  content: "";
+  opacity: 0.45;
 }
 
 .metric:hover {
   border-color: rgba(106, 203, 146, 0.34);
-  background: rgba(56, 177, 106, 0.1);
+  background: linear-gradient(135deg, rgba(56, 177, 106, 0.12), rgba(242, 196, 109, 0.06));
+  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.18);
   transform: translateY(-3px);
 }
 
@@ -666,6 +807,7 @@ textarea {
   border-radius: 16px;
   background: rgba(106, 203, 146, 0.08);
   color: var(--primary);
+  transition: border-color 220ms ease, background 220ms ease, transform 220ms var(--ease);
 }
 
 .document-icon .material-symbols-outlined {
@@ -693,7 +835,7 @@ textarea {
   color: var(--muted);
   font-size: 0.92rem;
   font-weight: 700;
-  transition: border-color 180ms ease, background 180ms ease, color 180ms ease, transform 180ms ease;
+  transition: border-color 220ms ease, background 220ms ease, color 220ms ease, transform 220ms var(--ease);
 }
 
 .tag-list span:hover {
@@ -732,7 +874,7 @@ textarea {
   grid-column: 1 / -1;
   grid-template-columns: 130px minmax(0, 1fr);
   background:
-    linear-gradient(135deg, rgba(106, 203, 146, 0.22), rgba(12, 30, 18, 0.96));
+    linear-gradient(135deg, rgba(106, 203, 146, 0.24), rgba(242, 196, 109, 0.08) 48%, rgba(12, 30, 18, 0.96));
   border-color: rgba(106, 203, 146, 0.22);
 }
 
@@ -747,7 +889,7 @@ textarea {
     radial-gradient(circle at 30% 20%, rgba(181, 238, 206, 0.24), transparent 45%),
     rgba(106, 203, 146, 0.1);
   color: var(--primary);
-  transition: border-color 180ms ease, background 180ms ease, color 180ms ease, transform 220ms ease;
+  transition: border-color 220ms ease, background 220ms ease, color 220ms ease, transform 260ms var(--ease), box-shadow 220ms ease;
 }
 
 .project-card:hover .project-visual,
@@ -757,6 +899,10 @@ textarea {
 .contact-card:hover .material-symbols-outlined {
   color: var(--success);
   transform: scale(1.08) rotate(-2deg);
+}
+
+.project-card:hover .project-visual {
+  box-shadow: 0 16px 38px rgba(56, 177, 106, 0.16);
 }
 
 .hero-project .project-visual {
@@ -860,7 +1006,7 @@ textarea {
   margin-top: 12px;
   color: var(--primary);
   font-weight: 800;
-  transition: color 180ms ease, transform 180ms ease;
+  transition: color 220ms ease, transform 220ms var(--ease);
 }
 
 .contact-card a:hover {
@@ -882,15 +1028,15 @@ textarea {
 
 .reveal {
   opacity: 0;
-  transform: translateY(22px);
-  transition: opacity 620ms ease, transform 620ms ease;
+  transform: translateY(26px) scale(0.985);
+  transition: opacity 720ms ease, transform 720ms var(--ease);
   transition-delay: var(--reveal-delay, 0ms);
   will-change: opacity, transform;
 }
 
 .reveal.is-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 
 .reveal-left {
@@ -954,6 +1100,7 @@ textarea {
     border-radius: var(--radius);
     background: var(--surface);
     box-shadow: var(--shadow);
+    transform-origin: top center;
   }
 
   .site-nav a {
@@ -963,6 +1110,7 @@ textarea {
 
   .site-nav.open {
     display: flex;
+    animation: menuDrop 220ms var(--ease) both;
   }
 
   .hero,
